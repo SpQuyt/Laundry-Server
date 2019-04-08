@@ -19,7 +19,7 @@
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.2.1",
     "mongodb": "^3.2.3",
-    "mongoose": "^5.4.22",
+    "mongoose": "^5.5.0",
     "superagent": "^4.1.0"
   },
   "devDependencies": {
