@@ -30,9 +30,7 @@ module.exports = (mongoose, app) => {
   app.post('/bill/insertBillToDB', (req, res) => {
     const newBill = new Bill({
       "billID": req.body.billID,
-      "userID": {
-        "$oid": ObjectId(req.body.userID)
-      },
+      "userID": ObjectId(req.body.userID),
       "name": req.body.name,
       "services": {
         "dry": parseInt(req.body.dry),
@@ -62,16 +60,19 @@ module.exports = (mongoose, app) => {
     // res.json({
     //   success: true
     // })
-    //   newBill.save((err, result) => {
-    //     if (err) res.json({
-    //       success: false,
-    //       errors: err
-    //     })
-    //     else res.json({
-    //       success: true,
-    //       result: result
-    //     })
-    //   })
+      newBill.save((err, result) => {
+        if (err) {
+          console.log(err)
+          res.json({
+            success: false
+          })
+        }
+        
+        else res.json({
+          success: true,
+          result: result
+        })
+      })
   })
 
   app.patch('/bill/update/:id', (req, res) => {
