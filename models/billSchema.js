@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectID;
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var billSchema = new Schema({
+const billSchema = new Schema({
   "billID": String,
   "userID": {
     "$oid": ObjectId

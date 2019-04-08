@@ -5,6 +5,7 @@ const port = 3000;
 const cors = require('cors');
 // const md5 = require('md5')
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 /*Load Controllers*/
 const billController = require('./controllers/billController');

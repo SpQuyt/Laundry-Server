@@ -1,14 +1,16 @@
 // const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectID;
-const billSchema = require('../models/billSchema')
+const billSchema = require('../models/billSchema');
 
 
 module.exports = (mongoose, app) => {
-  var Bill = mongoose.model("Bill", billSchema)
+  const Bill = mongoose.model('Bill', billSchema)
 
-  app.post('/bill/getByUserID', (req, res) => {
-    Bill.find({ 'userID': ObjectId(req.body.objID) }, function (err, result) {
-      if (err) return handleError(err);
+  app.get('/users/:id/bills', (req, res) => {
+    Bill.find({ 'userID': ObjectId(req.params.id) }, function (err, result) {
+      if (err) return res.json({
+        errors: err
+      });
 
       console.log(result);
       if (result.length == 0) {
@@ -26,7 +28,7 @@ module.exports = (mongoose, app) => {
   });
 
   app.post('/bill/insertBillToDB', (req, res) => {
-    let newBill = new Bill({
+    const newBill = new Bill({
       "billID": req.body.billID,
       "userID": {
         "$oid": ObjectId(req.body.userID)
@@ -52,22 +54,28 @@ module.exports = (mongoose, app) => {
       },
       "money": parseInt(req.body.money),
       "purchased": req.body.purchased == 'true' ? true : false
-    })
-
-    console.log(newBill);
-
-    // newUser.save((err, result) => {
-    //   if (err) return console.log(err);
-    //   console.log(result.fullname + " saved to collection.");
+    });
+    // Bill.insertMany([newBill], (err) => {
+    //   if (err) return res.json({ errors: err });
     // })
-
-    res.json({
-      success: true
-    })
+    // console.log(newBill);
+    // res.json({
+    //   success: true
+    // })
+    //   newBill.save((err, result) => {
+    //     if (err) res.json({
+    //       success: false,
+    //       errors: err
+    //     })
+    //     else res.json({
+    //       success: true,
+    //       result: result
+    //     })
+    //   })
   })
 
-  app.post('/bill/updateByBillID', (req, res) => {
-    Bill.findOneAndUpdate({ billID: req.body.billID }, { $set: { purchased: true } }, { new: true }, (err, result) => {
+  app.patch('/bill/update/:id', (req, res) => {
+    Bill.findOneAndUpdate({ billID: req.params.id }, { $set: { purchased: true } }, { new: true }, (err, result) => {
       if (result == null || err) {
         res.json({
           success: false
