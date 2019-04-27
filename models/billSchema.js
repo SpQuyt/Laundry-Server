@@ -4,9 +4,7 @@ const Schema = mongoose.Schema;
 
 const billSchema = new Schema({
   "billID": String,
-  "userID": {
-    "$oid": ObjectId
-  },
+  "userID": ObjectId,
   "name": String,
   "services": {
     "dry": Number,
@@ -27,7 +25,8 @@ const billSchema = new Schema({
     }
   },
   "money": Number,
-  "purchased": Boolean
+  "purchased": Boolean,
+  "timeCreated": String
 })
 
 module.exports = billSchema

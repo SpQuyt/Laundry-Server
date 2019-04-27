@@ -12,7 +12,6 @@ module.exports = (mongoose, app) => {
         errors: err
       });
 
-      console.log(result);
       if (result.length == 0) {
         res.json({
           success: false
@@ -28,6 +27,7 @@ module.exports = (mongoose, app) => {
   });
 
   app.post('/bill/insertBillToDB', (req, res) => {
+
     const newBill = new Bill({
       "billID": req.body.billID,
       "userID": ObjectId(req.body.userID),
@@ -51,28 +51,23 @@ module.exports = (mongoose, app) => {
         }
       },
       "money": parseInt(req.body.money),
-      "purchased": req.body.purchased == 'true' ? true : false
+      "purchased": req.body.purchased == 'true' ? true : false,
+      "timeCreated": req.body.timeCreated
     });
-    // Bill.insertMany([newBill], (err) => {
-    //   if (err) return res.json({ errors: err });
-    // })
-    // console.log(newBill);
-    // res.json({
-    //   success: true
-    // })
-      newBill.save((err, result) => {
-        if (err) {
-          console.log(err)
-          res.json({
-            success: false
-          })
-        }
-        
-        else res.json({
-          success: true,
-          result: result
+
+    newBill.save((err, result) => {
+      if (err) {
+        console.log(err)
+        res.json({
+          success: false
         })
+      }
+      
+      else res.json({
+        success: true,
+        result: result
       })
+    })
   })
 
   app.patch('/bill/update/:id', (req, res) => {
