@@ -11,7 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/storage": "^2.5.0",
-    "babel": "^6.23.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "exceljs": "^1.9.0",
@@ -27,6 +26,7 @@
     "@babel/core": "^7.4.3",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.3",
+    "babel-cli": "^6.26.0",
     "nodemon": "^1.18.10"
   }
 }
